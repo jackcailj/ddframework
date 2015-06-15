@@ -33,7 +33,7 @@ public class ExcelData implements Iterator<Object[]> {
 	protected static Logger logger = Logger.getLogger(ExcelData.class);
 	
 	private final String CASE_NAME = "用例名称";
-	private final String EXCEPTED = "期望";
+	private final String EXPECTED = "期望";
 	
 	private List<String> includeGropupList=new ArrayList<String>();
 	private List<String> excludeGropupList=new ArrayList<String>();
@@ -186,7 +186,7 @@ public class ExcelData implements Iterator<Object[]> {
 		Object r[] = new Object[3];
 		r[0] = s.get(CASE_NAME);
 		r[1] = s;
-		r[2] = s.get(EXCEPTED);
+		r[2] = s.get(EXPECTED);
 		
 	    
 		logger.info("测试用例---"+r[0]+"---开始执行");

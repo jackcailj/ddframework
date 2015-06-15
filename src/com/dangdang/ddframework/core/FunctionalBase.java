@@ -35,7 +35,7 @@ public abstract class FunctionalBase {
 	
 	
 	private final String CASE_NAME = "用例名称";
-	private final String EXCEPTED = "期望";
+	private final String EXPECTED = "期望";
 	
 	protected Object result;
 	protected boolean dataVerifyResult=true;
@@ -95,7 +95,7 @@ public abstract class FunctionalBase {
 	//
 	protected void handleParam(){
 		if(paramMap!=null){
-			String expected = paramMap.get(EXCEPTED);
+			String expected = paramMap.get(EXPECTED);
 			String name = paramMap.get(CASE_NAME);
 			if(expected!=null && expected.toString().trim().toLowerCase().equals("0")){
 				setEXCEPTSUCCESS(true);
@@ -109,7 +109,7 @@ public abstract class FunctionalBase {
 			}	
 			
 			paramMap.remove(CASE_NAME);
-			paramMap.remove(EXCEPTED);
+			paramMap.remove(EXPECTED);
 		}
 	}
 	
