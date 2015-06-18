@@ -7,7 +7,7 @@ public class ConfigCore {
 
 	protected static String groups="";
 	//定义测试脚本的版本，需要和testData目录名一致
-	protected static String testData = "readerV4";
+	protected static String testData = "readerV5";
 	
 	
 	public static String getGroups() {

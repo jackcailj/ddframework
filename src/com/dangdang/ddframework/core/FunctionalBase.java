@@ -3,6 +3,7 @@ package com.dangdang.ddframework.core;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.swing.text.StyledEditorKit.BoldAction;
 
@@ -28,8 +29,8 @@ public abstract class FunctionalBase {
 	
 	public static Logger logger = Logger.getLogger(FunctionalBase.class);
 	
-	protected Map<String, String> originalParamMap = new HashMap<String, String>();
-	protected Map<String, String> paramMap = new HashMap<String, String>();
+	protected Map<String, String> originalParamMap = new TreeMap<String, String>();
+	protected Map<String, String> paramMap = new TreeMap<String, String>();
 	protected DataVerifyManager dataVerifyManager = new DataVerifyManager();
 	
 	
@@ -112,7 +113,14 @@ public abstract class FunctionalBase {
 			paramMap.remove(EXPECTED);
 		}
 	}
-	
+
+	protected void beforeParseParam() throws Exception {
+
+	}
+
+	protected  void afterParseParam(){}
+
+
 	/*
 	 * 解析参数
 	 */
@@ -127,16 +135,15 @@ public abstract class FunctionalBase {
 		
 	}
 	
-	public void beforeParam(){
-		
-	}
+
 	
 	/*
 	 * 进行具体功能操作
 	 */
 	public void doWork() throws Exception {
-		beforeParam();
+        beforeParseParam();
 		parseParam();
+        afterParseParam();
 		try{
 			genrateVerifyData();
 		}
