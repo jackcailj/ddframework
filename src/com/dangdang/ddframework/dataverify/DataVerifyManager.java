@@ -48,6 +48,12 @@ public class DataVerifyManager {
 		dataVerify.setExpectResult(excepctResult);
 		verifys.add(dataVerify);
 	}
+
+	public  void clear(){
+		verifys.clear();
+		errorInfos.clear();
+		caseExpectResult=VerifyResult.SUCCESS;
+	}
 	
 	/*
 	 * 进行数据验证，并返回结果
