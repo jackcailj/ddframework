@@ -93,7 +93,7 @@ public class RecordVerify extends VerifyBase {
 	 * 根据类型自动生成查询Sql，并验证内容是否正确
 	 */
 	@Override
-	public VerifyResult dataVerify() {
+	public boolean dataVerify() {
 		// TODO Auto-generated method stub
 		try{
 			List results=DbUtil.selectList( __dbConf,__sql);
@@ -118,7 +118,7 @@ public class RecordVerify extends VerifyBase {
 			verifyResult=VerifyResult.Exception;
 		}
 		
-		return verifyResult;
+		return getVerifyResult();
 		
 	}
 

@@ -11,7 +11,7 @@ public interface IDataVerify {
 	/*
 	 * 数据验证函数
 	 */
-	public VerifyResult dataVerify() throws Exception;
+	public boolean dataVerify() throws Exception;
 	
 	/*
 	 * 数据验证失败时，获取验证失败的详细信息

@@ -133,7 +133,7 @@ public class RecordExVerify extends RecordVerify{
 	
 	
 	@Override
-	public VerifyResult dataVerify() {
+	public boolean dataVerify() {
 		// TODO Auto-generated method stub
 		try{
 			
@@ -212,6 +212,6 @@ public class RecordExVerify extends RecordVerify{
 			errorInfo="RecordExVerify 异常："+e;
 			verifyResult = VerifyResult.Exception;
 		}
-		return verifyResult;
+		return getVerifyResult();
 	}
 }
