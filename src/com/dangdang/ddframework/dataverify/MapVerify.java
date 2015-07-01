@@ -27,7 +27,7 @@ public class MapVerify extends VerifyBase{
 	}
 	
 	@Override
-	public VerifyResult dataVerify() throws Exception {
+	public boolean dataVerify() throws Exception {
 		// TODO Auto-generated method stub
 		try{
 			boolean result = Compare.equals(__map1, __map2);
@@ -39,7 +39,7 @@ public class MapVerify extends VerifyBase{
 			verifyResult=VerifyResult.Exception;
 		}
 		
-		return verifyResult;
+		return getVerifyResult();
 		
 	}
 

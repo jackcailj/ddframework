@@ -44,7 +44,7 @@ public class ListVerify extends VerifyBase {
 	}
 	
 	@Override
-	public VerifyResult dataVerify() throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+	public boolean dataVerify() throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		// TODO Auto-generated method stub
 		try{
 			boolean result= Compare.equalsAndSort(__list1, __list2);
@@ -55,7 +55,7 @@ public class ListVerify extends VerifyBase {
 			errorInfo = "ListVerify异常："+e;
 			verifyResult=VerifyResult.Exception;
 		}
-		return verifyResult;
+		return getVerifyResult();
 	}
 
 	

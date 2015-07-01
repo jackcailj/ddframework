@@ -43,8 +43,7 @@ public class ValueVerify<T> extends VerifyBase{
 	}
 
 	@Override
-	public VerifyResult dataVerify() throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-
+	public boolean dataVerify() throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		// TODO Auto-generated method stub
 		try{
 
@@ -86,6 +85,6 @@ public class ValueVerify<T> extends VerifyBase{
 		}
 		logger.info("值对比--结果:"+(getVerifyResult()?"与期望一致":"与期望不一致"));
 		
-		return verifyResult;
+		return getVerifyResult();
 	}
 }
