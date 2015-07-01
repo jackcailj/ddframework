@@ -44,9 +44,19 @@ public class ValueVerify<T> extends VerifyBase{
 
 	@Override
 	public VerifyResult dataVerify() throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+
 		// TODO Auto-generated method stub
 		try{
-			if(__isObject){
+
+			if(__value1==null || __value2==null){
+				if(__value1==__value2){
+					verifyResult=VerifyResult.SUCCESS;
+				}
+				else{
+					verifyResult=VerifyResult.FAILED;
+				}
+			}
+			else if(__isObject){
 				Map<String,Object> value1=(Map<String, Object>)JSONObject.toJSON(__value1);
 				Map<String,Object> value2=(Map<String, Object>)JSONObject.toJSON(__value2);
 				
