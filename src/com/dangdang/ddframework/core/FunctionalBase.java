@@ -36,7 +36,7 @@ public abstract class FunctionalBase {
 	
 	
 	private final String CASE_NAME = "用例名称";
-	private final String EXPECTED = "期望";
+	public final String EXPECTED = "期望";
 	
 	protected Object result;
 	protected boolean dataVerifyResult=true;
