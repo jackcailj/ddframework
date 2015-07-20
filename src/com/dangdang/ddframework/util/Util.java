@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.dom4j.DocumentException;
 import org.xml.sax.SAXException;
@@ -78,5 +80,23 @@ public class Util {
 	        sb.append(buffer.charAt(r.nextInt(range))); 
 	    } 
 	    return sb.toString(); 
+	}
+
+
+	/*
+	使用正则表达式，获取列表所有对象中某个属性值，返回列表
+	例如：
+		List<User> User包含id字段，要获取所有的id列表
+		getFields（listuser，"id")
+	 */
+	public static List<String> getFields(List list,String objectField){
+		Matcher matcher = Pattern.compile("\""+objectField+"\":\\s*[\"]*(.*?)[\",}]*",Pattern.DOTALL).matcher(JSONObject.toJSONString(list));
+		List<String> lists=new ArrayList<String>();
+		while (matcher.find()){
+			lists.add(matcher.group(1));
+		}
+
+		return lists;
+
 	}
 }
