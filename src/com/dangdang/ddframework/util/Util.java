@@ -99,4 +99,24 @@ public class Util {
 		return lists;
 
 	}
+
+	/*
+	获取json格式regex字符串
+	参数：
+		jsonKey：json的key值
+	 */
+	public static String getJsonRegexString(String jsonKey){
+		return "\""+jsonKey+"\":\\s*[\"]*(.*?)[\",}]*";
+	}
+
+    /*
+	获取json格式regex字符串
+	参数：
+		jsonKey：json的key值
+		jsonValue:json key 对应的值
+	 */
+    public static String getJsonRegexString(String jsonKey,String jsonValue){
+        return "\""+jsonKey+"\":\\s*[\"]*"+jsonValue+"[\",}]*";
+    }
+
 }

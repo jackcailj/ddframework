@@ -43,7 +43,7 @@ public abstract class FunctionalBase {
 	protected boolean expectedOperateResult = true;
 	
 	protected String caseName;
-	protected boolean EXCEPTSUCCESS=false;
+	protected boolean EXCEPTSUCCESS=true;
  	
 	public boolean isEXCEPTSUCCESS() {
 		return EXCEPTSUCCESS;
