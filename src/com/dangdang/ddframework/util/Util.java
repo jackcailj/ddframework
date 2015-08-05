@@ -90,7 +90,7 @@ public class Util {
 		getFields（listuser，"id")
 	 */
 	public static List<String> getFields(List list,String objectField){
-		Matcher matcher = Pattern.compile("\""+objectField+"\":\\s*[\"]*(.*?)[\",}]*",Pattern.DOTALL).matcher(JSONObject.toJSONString(list));
+		Matcher matcher = Pattern.compile("\""+objectField+"\":\\s*[\"]*(.*?)[\",}]+",Pattern.DOTALL).matcher(JSONObject.toJSONString(list));
 		List<String> lists=new ArrayList<String>();
 		while (matcher.find()){
 			lists.add(matcher.group(1));
@@ -106,7 +106,7 @@ public class Util {
 		jsonKey：json的key值
 	 */
 	public static String getJsonRegexString(String jsonKey){
-		return "\""+jsonKey+"\":\\s*[\"]*(.*?)[\",}]*";
+		return "\""+jsonKey+"\":\\s*[\"]*(.*?)[\",}]+";
 	}
 
     /*
@@ -116,7 +116,7 @@ public class Util {
 		jsonValue:json key 对应的值
 	 */
     public static String getJsonRegexString(String jsonKey,String jsonValue){
-        return "\""+jsonKey+"\":\\s*[\"]*"+jsonValue+"[\",}]*";
+        return "\""+jsonKey+"\":\\s*[\"]*"+jsonValue+"[\",}]+";
     }
 
 }

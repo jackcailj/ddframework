@@ -38,6 +38,11 @@ public class Compare {
 				logger.info(keyString+"值为null，不进行比对");
 				continue;
 			}
+
+			if(map1.get(keyString)==null){
+				logger.info(keyString+"值为null,不相同");
+				return false;
+			}
 			
 			//如果是列表，比对类表是否包含
 			if(valueString instanceof List){
