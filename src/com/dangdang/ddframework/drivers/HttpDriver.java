@@ -156,6 +156,7 @@ public class HttpDriver {
 				}
 			
 			logger.info("Get请求URL:"+url);
+			url = url.replace("%25","%");
 			HttpGet httpGet = new HttpGet(url);
 			CloseableHttpResponse response = getHttpClient(bHttps).execute(httpGet);
 			int statusCode = response.getStatusLine().getStatusCode();
@@ -243,6 +244,7 @@ public class HttpDriver {
 					}
 				}
 			}
+
 			
 			logger.info("Post请求URL:"+url);
 			HttpPost httpPost = new HttpPost(url);
