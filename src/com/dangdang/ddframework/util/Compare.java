@@ -48,7 +48,7 @@ public class Compare {
 			if(valueString instanceof List){
 				List tempList1=(List)map1.get(keyString);
 				List tempList2=(List)valueString;
-				if(!Contains(tempList1,tempList2)){
+				if(!equalsAndSort(tempList1,tempList2)){
 					return false;
 				}
 			}
@@ -56,7 +56,7 @@ public class Compare {
 			{
 				Map<String, Object> tempMap1=(Map<String, Object>)map1.get(keyString);
 				Map<String, Object> tempMap2=(Map<String, Object>)valueString;
-				if(!Contains(tempMap1,tempMap2)){
+				if(!equals(tempMap1,tempMap2)){
 					return false;
 				}
 			}
