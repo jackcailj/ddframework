@@ -183,7 +183,7 @@ public class Compare {
 			Object object = list1.get(i);
 			Object o1 = list2.get(i);
 			if (object instanceof Map && o1 instanceof Map) {
-				if (!equals((Map<String, Object>) o1,(Map<String, Object>) object)) {
+				if (!Contains((Map<String, Object>) o1,(Map<String, Object>) object)) {
 					logger.error("第" + i + "行数据不相等");
 					return false;
 				} else {
