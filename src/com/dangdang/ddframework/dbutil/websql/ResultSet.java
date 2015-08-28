@@ -18,6 +18,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentFactory;
@@ -28,6 +29,8 @@ import org.xml.sax.SAXException;
 import com.alibaba.fastjson.JSONObject;
 
 public class ResultSet {
+
+	public static Logger logger = Logger.getLogger(ResultSet.class);
 	
 	List results;
 	
@@ -78,8 +81,13 @@ public class ResultSet {
 						//为row数据。
 						if(filedInfoMap!=null) {
 							FiledInfo info = filedInfoMap.get(columns.get(j++));
-							Map<String, Object> temp = (Map<String, Object>) row;
-							temp.put(info.getAliasName(), colgroup);
+							if(info==null){
+								logger.error("获取字段异常，字段名:"+columns.get(j-1));
+							}
+							else {
+								Map<String, Object> temp = (Map<String, Object>) row;
+								temp.put(info.getAliasName(), colgroup);
+							}
 						}
 						else//非数据库映射类
 						{

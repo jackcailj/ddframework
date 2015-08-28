@@ -76,7 +76,7 @@ public class WebSqlConnection {
 		
 		logger.info("执行sql--"+sql);
 		
-		String resultString = HttpDriver.doPost(url, params, "UTF-8", true,false);
+		String resultString = HttpDriver.doPost(url, params, "GBK", true,false);
 		
 		ResultSet resultSet =new ResultSet(resultString);
 		logger.info("执行sql--结束，结果："+JSONObject.toJSONString(resultSet.getResults()));

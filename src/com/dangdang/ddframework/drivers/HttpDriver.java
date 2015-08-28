@@ -34,6 +34,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
@@ -43,6 +44,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.execchain.RequestAbortedException;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.*;
 
@@ -217,12 +219,18 @@ public class HttpDriver {
 			HttpEntity reEntity =null;
 			if(multipart){
 				MultipartEntityBuilder builder=MultipartEntityBuilder.create();
-				builder.setCharset(Charset.forName(charset));
-				
+				//builder.setCharset(Charset.forName(charset));
+				builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+
+				ContentType contentType = ContentType.create(HTTP.PLAIN_TEXT_TYPE, Charset.forName(charset));
+
 				for(Map.Entry<String, String> entry: params.entrySet()){
 					String value = entry.getValue();
 					if (value != null) {
-						builder.addTextBody(entry.getKey(), value);
+						//StringBody stringBody = new StringBody(value,contentType);
+						//builder.addPart(entry.getKey(), stringBody);
+						builder.addTextBody(entry.getKey(), value,contentType);
+						//builder.addPart(entry.getKey(), new StringBody(value, contentType));
 					}
 				}
 				
