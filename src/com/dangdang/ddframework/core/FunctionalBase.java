@@ -7,6 +7,7 @@ import java.util.TreeMap;
 
 import javax.swing.text.StyledEditorKit.BoldAction;
 
+import com.dangdang.ddframework.dataverify.verify_annotation.AnnotationVerifyProcessor;
 import org.apache.log4j.Logger;
 
 import com.alibaba.fastjson.JSONObject;
@@ -159,6 +160,9 @@ public abstract class FunctionalBase {
 	 * 
 	 */
 	protected void dataVerify() throws Exception {
+
+		//自动寻找reponse类，解析相应的注解，加入字段规则检查
+		AnnotationVerifyProcessor.handleVerifyAnnotation(dataVerifyManager,this);
 		dataVerifyResult = dataVerifyManager.dataVerify();
 		
 		/*//期望操作的结果与数据验证结果应一致
