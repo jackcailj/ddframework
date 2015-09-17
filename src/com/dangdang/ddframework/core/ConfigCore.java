@@ -2,7 +2,7 @@ package com.dangdang.ddframework.core;
 
 public class ConfigCore {
 	
-	protected static TestEnvironment environment=TestEnvironment.STAGING;
+	protected static TestEnvironment environment=TestEnvironment.TESTING;
 	protected static TestDevice device=TestDevice.ANDROID;
 
 	protected static String groups="";
@@ -41,6 +41,4 @@ public class ConfigCore {
 	public static void setTestData(String data) {
 		ConfigCore.testData = data;
 	}
-
-
 }

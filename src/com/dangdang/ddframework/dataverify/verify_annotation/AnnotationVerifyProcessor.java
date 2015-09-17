@@ -41,12 +41,11 @@ public class AnnotationVerifyProcessor {
             Object fieldValue = field.get(o);
             //String type=field.getType().getName();
             //根据注解产生验证数据
-            Null nullAnnotation;
-            nullAnnotation = field.getAnnotation(Null.class);
+            Null nullAnnotation = field.getDeclaredAnnotation(Null.class);
             if (nullAnnotation != null) {
                 dataVerifyManager.add(new ValueVerify<Object>(null, fieldValue), VerifyResult.SUCCESS);
             }
-            NotNull notNullAnnotation = field.getAnnotation(NotNull.class);
+            NotNull notNullAnnotation = field.getDeclaredAnnotation(NotNull.class);
             if (notNullAnnotation != null) {
                 dataVerifyManager.add(new ValueVerify<Object>(null, fieldValue), VerifyResult.FAILED);
             }
