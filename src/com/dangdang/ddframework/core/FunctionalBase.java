@@ -162,9 +162,7 @@ public abstract class FunctionalBase {
 	protected void dataVerify() throws Exception {
 
 		//自动寻找reponse类，解析相应的注解，加入字段规则检查
-		if(EXCEPTSUCCESS) {
-			AnnotationVerifyProcessor.handleVerifyAnnotation(dataVerifyManager, this);
-		}
+		AnnotationVerifyProcessor.handleVerifyAnnotation(dataVerifyManager,this);
 		dataVerifyResult = dataVerifyManager.dataVerify();
 		
 		/*//期望操作的结果与数据验证结果应一致
