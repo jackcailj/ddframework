@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 
 import javax.activation.DataSource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.DocumentException;
 import org.xml.sax.SAXException;
 
@@ -58,26 +59,39 @@ public class RecordVerify extends VerifyBase {
 			FiledInfo filedInfo=entry.getValue();
 			Field field=__dbObject.getClass().getDeclaredField(filedInfo.getAliasName());
 			field.setAccessible(true);
-			if(field.get(__dbObject)!=null){
-				hSqlString.append(filedInfo.getColumnName());
-				hSqlString.append("=");
-				
-				if(field.getType().toString().equals(String.class.toString()) ){
-					hSqlString.append("'");
-					hSqlString.append(field.get(__dbObject));
-					hSqlString.append("'");
-					
-				}
-				else if(field.getType().toString().equals(Date.class.toString())){
-					hSqlString.append("'");
-					hSqlString.append(((Date)field.get(__dbObject)).toLocaleString());
-					hSqlString.append("'");
-				}
-				else {
-					hSqlString.append(field.get(__dbObject));
-				}
-				hSqlString.append(" and ");
-			}
+			Object value =field.get(__dbObject);
+
+            if(value ==null
+                    || ((field.getGenericType().toString().equals("class java.lang.Long")||field.getGenericType().toString().equals("long"))&& value.equals(Long.MIN_VALUE))
+                    ||((field.getGenericType().toString().equals("class java.lang.Integer")||field.getGenericType().toString().equals("int"))&& value.equals(Integer.MIN_VALUE))
+                    ||((field.getGenericType().toString().equals("class java.lang.Short")||field.getGenericType().toString().equals("short"))&& value.equals(Short.MIN_VALUE))
+                    ||((field.getGenericType().toString().equals("class java.lang.Float")||field.getGenericType().toString().equals("float"))&& value.equals(Float.MIN_VALUE))
+                    ||((field.getGenericType().toString().equals("class java.lang.Float")||field.getGenericType().toString().equals("float"))&& value.equals(Float.MIN_VALUE))
+                    ||((field.getGenericType().toString().equals("class java.lang.Double")||field.getGenericType().toString().equals("double"))&& value.equals(Double.MIN_VALUE))
+                    ||((field.getGenericType().toString().equals("class java.lang.String"))&& StringUtils.isBlank(value.toString()))
+            ){
+                continue;
+            }
+
+
+
+
+            hSqlString.append(filedInfo.getColumnName());
+            hSqlString.append("=");
+
+            if (field.getType().toString().equals(String.class.toString()) ) {
+                hSqlString.append("'");
+                hSqlString.append(field.get(__dbObject));
+                hSqlString.append("'");
+            } else if (field.getType().toString().equals(Date.class.toString())) {
+                hSqlString.append("'");
+                hSqlString.append(((Date) field.get(__dbObject)).toLocaleString());
+                hSqlString.append("'");
+            } else {
+                hSqlString.append(field.get(__dbObject));
+            }
+            hSqlString.append(" and ");
+
 		
 		}
 		
