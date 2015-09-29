@@ -10,6 +10,7 @@ public abstract class InterfaceBase extends FunctionalBase {
 	
 	protected String URL;
 	protected boolean bHttps=false;
+	protected boolean bPost=false;
 	
 	public InterfaceBase() {
 		// TODO Auto-generated constructor stub
@@ -33,7 +34,12 @@ public abstract class InterfaceBase extends FunctionalBase {
 		// TODO Auto-generated method stub
 		super.doWork();
 		beforeRequest();
-		result = HttpDriver.doGet(URL, paramMap,bHttps);
+		if(bPost==false) {
+			result = HttpDriver.doGet(URL, paramMap, bHttps);
+		}
+		else{
+			result = HttpDriver.doPost(URL, bHttps, paramMap);
+		}
 	}
 	
 	public void beforeRequest(){

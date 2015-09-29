@@ -1,12 +1,11 @@
 package com.dangdang.ddframework.dataverify;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dangdang.ddframework.util.Compare;
+import javacommon.util.CollectionUtils;
 
 /*
  * 列表对比，比较顺序，比较列表每一项值是否相等
@@ -22,8 +21,11 @@ public class ListVerify extends VerifyBase {
 	 */
 	public ListVerify(List list1, List list2,boolean isObject) {
 		// TODO Auto-generated constructor stub
-		__list1 = list1;
-		__list2 = list2;
+
+		__list1=new ArrayList();
+		__list1.addAll(list1);
+		__list2=new ArrayList();
+		__list2.addAll(list2);
 		if(isObject){
 			convertToMap(__list1);
 			convertToMap(__list2);
