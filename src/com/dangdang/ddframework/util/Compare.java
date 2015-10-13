@@ -39,10 +39,10 @@ public class Compare {
 				continue;
 			}
 
-			if(map1.get(keyString)==null){
-				logger.info(keyString+"值为null,不相同");
-				return false;
-			}
+			/*if(map1.get(keyString)==null){
+				logger.info(keyString+"值为null，不进行比对");
+				continue;
+			}*/
 			
 			//如果是列表，比对类表是否包含
 			if(valueString instanceof List){
@@ -111,7 +111,7 @@ public class Compare {
 				
 				if(object instanceof Map &&  o1 instanceof Map ){
 					
-						if (!Contains((Map<String, Object>)o1,(Map<String, Object>)object)) {
+						if (!Contains((Map<String, Object>)object,(Map<String, Object>)o1)) {
 							continue;
 						}
 						else {
@@ -183,7 +183,7 @@ public class Compare {
 			Object object = list1.get(i);
 			Object o1 = list2.get(i);
 			if (object instanceof Map && o1 instanceof Map) {
-				if (!Contains((Map<String, Object>) o1,(Map<String, Object>) object)) {
+				if (!Contains((Map<String, Object>)object,(Map<String, Object>) o1)) {
 					logger.error("第" + i + "行数据不相等");
 					return false;
 				} else {
