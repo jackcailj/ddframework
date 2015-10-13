@@ -11,7 +11,7 @@ import javacommon.util.CollectionUtils;
  * 列表对比，比较顺序，比较列表每一项值是否相等
  */
 public class ListVerify extends VerifyBase {
-
+	
 	List __list1;
 	List __list2;
 	
