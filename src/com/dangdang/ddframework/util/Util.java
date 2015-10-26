@@ -116,7 +116,7 @@ public class Util {
 		jsonValue:json key 对应的值
 	 */
     public static String getJsonRegexString(String jsonKey,String jsonValue){
-        return "\""+jsonKey+"\":\\s*[\"]*"+jsonValue+"[\",}]+";
+        return "\""+jsonKey+"\":\\s*[\"]*"+jsonValue+"(.*?)[\",}]+";
     }
 
 }
