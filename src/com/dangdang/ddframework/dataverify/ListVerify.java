@@ -21,11 +21,17 @@ public class ListVerify extends VerifyBase {
 	 */
 	public ListVerify(List list1, List list2,boolean isObject) {
 		// TODO Auto-generated constructor stub
+		if(list1!=null) {
+			__list1 = new ArrayList();
+			__list1.addAll(list1);
 
-		__list1=new ArrayList();
-		__list1.addAll(list1);
-		__list2=new ArrayList();
-		__list2.addAll(list2);
+		}
+
+		if(list2!=null) {
+			__list2 = new ArrayList();
+			__list2.addAll(list2);
+		}
+
 		if(isObject){
 			convertToMap(__list1);
 			convertToMap(__list2);
@@ -36,6 +42,10 @@ public class ListVerify extends VerifyBase {
 	 * 将列表中Object转换成Map，方便比对
 	 */
 	protected void convertToMap(List list) {
+		if(list==null){
+			return;
+		}
+
 		 Iterator<Object> it = list.iterator();  
 		 int index = 0;
 	     while(it.hasNext()){  
@@ -49,9 +59,20 @@ public class ListVerify extends VerifyBase {
 	public boolean dataVerify() throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		// TODO Auto-generated method stub
 		try{
-			boolean result= Compare.equalsAndSort(__list1, __list2);
-			if(result==false){
-				verifyResult=VerifyResult.FAILED;
+
+			if(__list1==null || __list2==null){
+				if(__list1==__list2){
+					verifyResult=VerifyResult.SUCCESS;
+				}
+				else{
+					verifyResult=VerifyResult.FAILED;
+				}
+			}
+			else {
+				boolean result = Compare.equalsAndSort(__list1, __list2);
+				if (result == false) {
+					verifyResult = VerifyResult.FAILED;
+				}
 			}
 		}catch(Exception e){
 			errorInfo = "ListVerify异常："+e;
