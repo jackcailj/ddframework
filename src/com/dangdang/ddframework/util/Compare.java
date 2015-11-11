@@ -30,7 +30,7 @@ public class Compare {
 			Object valueString=entry.getValue();
 			
 			if(!map1.containsKey(keyString)){
-				logger.info("不包含key:"+keyString);
+				logger.error("不包含key:"+keyString);
 				return false;
 			}
 			
@@ -39,10 +39,11 @@ public class Compare {
 				continue;
 			}
 
-			/*if(map1.get(keyString)==null){
-				logger.info(keyString+"值为null，不进行比对");
-				continue;
-			}*/
+
+			if(map1.get(keyString)==null){
+				logger.error("value1 "+keyString+"值为null，不正确");
+				return false;
+			}
 			
 			//如果是列表，比对类表是否包含
 			if(valueString instanceof List){
@@ -66,20 +67,20 @@ public class Compare {
 					long time2 =(Long) map1.get(keyString).getClass().getMethod("getTime",null).invoke(valueString);
 					
 					if(time1!=time2){
-						logger.info("不一致的地方：值【key:"+keyString+" value:"+map1.get(keyString)+"】和【key:"+keyString+" value:"+valueString+"】");
+						logger.error("不一致的地方：值【key:"+keyString+" value:"+map1.get(keyString)+"】和【key:"+keyString+" value:"+valueString+"】");
 						return false;
 					}
 				}
 				else if(valueString instanceof BigDecimal){
                     //BigDecimal比较大小时使用equals不行，需要用compareTo
 					if(((BigDecimal) valueString).compareTo(new BigDecimal(map1.get(keyString).toString()))!=0){
-						logger.info("不一致的地方：值【key:"+keyString+" value:"+map1.get(keyString)+"】和【key:"+keyString+" value:"+valueString+"】");
+						logger.error("不一致的地方：值【key:"+keyString+" value:"+map1.get(keyString)+"】和【key:"+keyString+" value:"+valueString+"】");
 						return false;
 					}
 				}
 				else if(!valueString.toString().equals(map1.get(keyString).toString())){
 
-					logger.info("不一致的地方：值【key:"+keyString+" value:"+map1.get(keyString)+"】和【key:"+keyString+" value:"+valueString+"】");
+					logger.error("不一致的地方：值【key:"+keyString+" value:"+map1.get(keyString)+"】和【key:"+keyString+" value:"+valueString+"】");
 					return false;
 				}
 			}
@@ -134,7 +135,7 @@ public class Compare {
 				
 			}
 			if(!bContains){
-				logger.info("不包含对象:"+object);
+				logger.error("不包含对象:"+object);
 				return false;
 			}
 			
