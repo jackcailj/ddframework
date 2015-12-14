@@ -32,7 +32,7 @@ public class ConfigCore {
 	
 	public static String getConfigFile()
 	{
-		return "conf/config_"+environment.toString()+".properties";
+		return "conf/readerV5/config_"+environment.toString()+".properties";
 	}
 	
 	public static String getTestData() {

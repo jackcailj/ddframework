@@ -29,5 +29,9 @@
 	<classpathentry kind="lib" path="lib/mongo-java-driver-2.5.3.jar"/>
 	<classpathentry kind="lib" path="lib/org.apache.commons.collections_3.2.0.v2013030210310.jar"/>
 	<classpathentry kind="lib" path="lib/testng.jar"/>
+	<classpathentry kind="lib" path="lib/fluent-hc-4.3.6.jar"/>
+	<classpathentry kind="lib" path="lib/Groovy.jar"/>
+	<classpathentry kind="lib" path="lib/httpclient-cache-4.3.6.jar"/>
+	<classpathentry kind="lib" path="lib/java-gearman-service-0.6.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

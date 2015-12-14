@@ -11,7 +11,7 @@ public abstract class InterfaceBase extends FunctionalBase {
 	protected String URL;
 	protected boolean bHttps=false;
 	protected boolean bPost=false;
-	protected String enviroment;
+	protected String enviroment = "";
 	
 	public String getEnviroment() {
 		return enviroment;

@@ -16,7 +16,7 @@ public class TelnetUtil {
     private InputStream in;
     /** 向 服务器写入 命令 */
     private PrintStream out;
-    private String  ip = "10.255.223.155";
+    private String  ip = "10.255.223.155";//155开发环境 //208测试环境
     private Integer port = 6379;
  
     /**

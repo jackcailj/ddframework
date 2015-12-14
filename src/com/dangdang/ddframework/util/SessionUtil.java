@@ -92,6 +92,7 @@ public class SessionUtil {
 		}
 		
 		Session session = null;
+		//String sql = 
 		try{
 			session =getSession(conf);
 			List<Map<String, Object>> result = session
