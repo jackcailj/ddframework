@@ -18,6 +18,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -73,6 +74,7 @@ public class ResultSet {
 				Object row=new HashMap<String, String>();	
 				while(tdmatcher.find()){
 					String colgroup=tdmatcher.group(1);
+					colgroup=handleSpecitalString(colgroup);
 					if(i==1){
 						//为列名
 						columns.add(colgroup);
@@ -109,6 +111,18 @@ public class ResultSet {
 
 		return JSONObject.parseArray(JSONObject.toJSONString(list), classz);
 	}
+
+	/*
+	处理结果中的特殊字符
+	 */
+	protected String handleSpecitalString(String text){
+		if(text!=null){
+			text=StringUtils.replace(text,"?"," ");
+		}
+
+		return text;
+	}
+
 	
 	protected List parseResult(String result)
 			throws ParserConfigurationException, InstantiationException,

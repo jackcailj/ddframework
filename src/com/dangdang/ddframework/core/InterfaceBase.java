@@ -5,6 +5,8 @@ import java.util.Map;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.dangdang.ddframework.drivers.HttpDriver;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public abstract class InterfaceBase extends FunctionalBase {
 	
@@ -49,11 +51,22 @@ public abstract class InterfaceBase extends FunctionalBase {
 		else{
 			result = HttpDriver.doPost(URL, bHttps, paramMap);
 		}
+
+		handleResult();
 	}
 	
 	public void beforeRequest(){
 		
 	}
-	
-	
+
+	/*
+	处理返回结果中的特殊字符
+	 */
+	public void handleResult(){
+		if(result!=null){
+			String tempString=result.toString();
+			tempString=StringUtils.replace(tempString,"\\u00A0"," ");//将 \u00A0替换为空格
+			result=tempString;
+		}
+	}
 }

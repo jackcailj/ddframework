@@ -36,7 +36,9 @@ public class RecordVerify extends VerifyBase {
 	public RecordVerify(String dbConf,Object dbObject) throws IllegalArgumentException, SecurityException, DocumentException, SAXException, IllegalAccessException, NoSuchFieldException{
 		__dbObject = dbObject;
 		__dbConf = dbConf;
-		__sql=generateSql();
+		if(dbObject!=null) {
+			__sql = generateSql();
+		}
 	}
 	
 	public RecordVerify(String dbConf,String sql) {
