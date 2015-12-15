@@ -74,7 +74,7 @@ public class ResultSet {
 				Object row=new HashMap<String, String>();	
 				while(tdmatcher.find()){
 					String colgroup=tdmatcher.group(1);
-					colgroup=handleSpecitalString(colgroup);
+					//colgroup=handleSpecitalString(colgroup);
 					if(i==1){
 						//为列名
 						columns.add(colgroup);
@@ -117,6 +117,10 @@ public class ResultSet {
 	 */
 	protected String handleSpecitalString(String text){
 		if(text!=null){
+			if(text.startsWith("http")){
+				return text;
+			}
+
 			text=StringUtils.replace(text,"?"," ");
 		}
 
