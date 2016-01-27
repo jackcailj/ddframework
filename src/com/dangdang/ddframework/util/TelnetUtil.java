@@ -7,7 +7,9 @@ import java.io.PrintStream;
 import org.apache.commons.net.telnet.TelnetClient;
 import org.apache.log4j.Logger;
 
- 
+import javax.persistence.criteria.CriteriaBuilder;
+
+
 public class TelnetUtil {
 	static Logger logger = Logger.getLogger(TelnetUtil.class);
     /** 新建一个TelnetClient对象 */
@@ -113,11 +115,28 @@ public class TelnetUtil {
      * @param port
      */
     public void clearCache(String url,Integer port){
-    	logger.info("[telnet] 存储服务器正在清空缓存服务器缓存[" + url + ":" + port + "]----------------------------");
-       connect(ip, port);
-       String result = execute("flush_all");
-       logger.info(result);  
-       disconnect();
+        logger.info("[telnet] 存储服务器正在清空缓存服务器缓存[" + url + ":" + port + "]----------------------------");
+        connect(ip, port);
+        String result = execute("flush_all");
+        logger.info(result);
+        disconnect();
     }
+
+    public static void clearRedis(String ip, Integer port, String db){
+        TelnetUtil telnetUtil = new TelnetUtil();
+        try {
+            telnetUtil.connect(ip, port);
+            String result = telnetUtil.execute("select " + db);
+            logger.info("select " + db + "命令执行结果:" + result);
+            result = telnetUtil.execute("flushAll");
+            logger.info("flush_all 命令执行结果:" + result);
+        }catch (Exception e){
+            logger.error(e.getMessage());
+        }
+        finally {
+            telnetUtil.disconnect();
+        }
+    }
+
    
 }

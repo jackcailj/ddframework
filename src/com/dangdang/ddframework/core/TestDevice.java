@@ -3,7 +3,7 @@ package com.dangdang.ddframework.core;
 public enum TestDevice {
 	IPHONE("iphone"),
 	IPAD("ipad"),
-	ANDROID("android");
+	ANDROID("Android");
 	
 
 	private String context;

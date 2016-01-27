@@ -88,7 +88,23 @@ public class ResultSet {
 							}
 							else {
 								Map<String, Object> temp = (Map<String, Object>) row;
-								temp.put(info.getAliasName(), colgroup);
+
+                                //查出来的字符串可能为Object或者Array，需要进行处理
+								//Object先用正则^{.*}$来匹配
+								//Array先用正则^[.*]$来匹配
+								//Matcher objectMacher = Pattern.compile("^\\{.+\\}$",Pattern.DOTALL).matcher(colgroup.trim());
+                                //Matcher arrayMacher = Pattern.compile("^[.+]$",Pattern.DOTALL).matcher(colgroup.trim());
+                                if(colgroup.startsWith("{") && colgroup.endsWith("}")) {
+                                    Map<String,Object> objectMap = JSONObject.parseObject(colgroup.trim());
+                                    temp.put(info.getAliasName(), objectMap);
+                                }
+                                else if(colgroup.startsWith("[") && colgroup.endsWith("]")){
+                                    List objectArray = JSONObject.parseArray(colgroup.trim());
+                                    temp.put(info.getAliasName(), objectArray);
+                                }
+                                else{
+                                    temp.put(info.getAliasName(), colgroup);
+                                }
 							}
 						}
 						else//非数据库映射类
@@ -109,6 +125,7 @@ public class ResultSet {
 				
 			}
 
+		logger.info("JSONString:"+JSONObject.toJSONString(list));
 		return JSONObject.parseArray(JSONObject.toJSONString(list), classz);
 	}
 
