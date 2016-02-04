@@ -14,6 +14,7 @@ public class ListVerify extends VerifyBase {
 	
 	List __list1;
 	List __list2;
+    VerifyType __verifyType=VerifyType.EQUALS;
 	
 	/*
 	 * 参数：
@@ -36,6 +37,17 @@ public class ListVerify extends VerifyBase {
 			convertToMap(__list1);
 			convertToMap(__list2);
 		}
+	}
+
+	/*
+	参数：
+	* 	isObject：如果list中全是orm映射类，设置为true，需要转换成map再进行比较
+	*   isContains：是否为包含验证
+	 */
+	public ListVerify(List list1, List list2,boolean isObject,VerifyType verifyType){
+		this(list1,list2,isObject);
+        __verifyType=verifyType;
+
 	}
 	
 	/*
@@ -69,7 +81,14 @@ public class ListVerify extends VerifyBase {
 				}
 			}
 			else {
-				boolean result = Compare.equalsAndSort(__list1, __list2);
+				boolean result = false;
+				if(__verifyType==VerifyType.CONTAINS){
+					result=Compare.Contains(__list1,__list2);
+				}
+				else{
+					result = Compare.equalsAndSort(__list1, __list2);
+				}
+
 				if (result == false) {
 					verifyResult = VerifyResult.FAILED;
 				}
