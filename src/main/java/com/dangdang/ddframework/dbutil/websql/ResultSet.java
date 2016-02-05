@@ -87,8 +87,9 @@ public class ResultSet {
 						if(filedInfoMap!=null) {
 							FiledInfo info = filedInfoMap.get(columns.get(j++));
 							if(info==null){
-                                throw new Exception("获取字段异常，字段名:"+columns.get(j-1));
-								//logger.error("获取字段异常，字段名:"+columns.get(j-1));
+                                //throw new Exception("获取字段异常，字段名:"+columns.get(j-1));
+								logger.error("获取字段异常，字段名:"+columns.get(j-1));
+                                continue;
 							}
 							else {
                                 cloumnName=info.getAliasName();
