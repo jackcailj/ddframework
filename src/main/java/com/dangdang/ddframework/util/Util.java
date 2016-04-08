@@ -101,6 +101,23 @@ public class Util {
 	}
 
 	/*
+	使用正则表达式，获取列表所有对象中某个属性值，返回列表
+	例如：
+		List<User> User包含id字段，要获取所有的id列表
+		getFields（listuser，"id")
+	 */
+	public static List<String> getFields(String jsonString,String objectField){
+		Matcher matcher = Pattern.compile("\""+objectField+"\":\\s*[\"]*(.*?)[\",}]+",Pattern.DOTALL).matcher(jsonString);
+		List<String> lists=new ArrayList<String>();
+		while (matcher.find()){
+			lists.add(matcher.group(1));
+		}
+
+		return lists;
+
+	}
+
+	/*
 	获取json格式regex字符串
 	参数：
 		jsonKey：json的key值

@@ -8,12 +8,15 @@ import com.dangdang.ddframework.reponse.ReponseV2;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by cailianjie on 2015-8-29.
  * 反射类中字段是否有verify_annotation包里的注解，如果有进行相关处理
  */
 public class AnnotationVerifyProcessor {
+
+    protected static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AnnotationVerifyProcessor.class);
 
     public static void handleVerifyAnnotation(DataVerifyManager dataVerifyManager,Object o) throws IllegalAccessException {
         if(o ==null) {
@@ -54,13 +57,20 @@ public class AnnotationVerifyProcessor {
             if (isList(field.get(o))) {
                 List list = (List) field.get(o);
                 for (Object element : list) {
-                    _handleVerifyAnnotation(dataVerifyManager, element);
+                    if(!isJavaClass(element.getClass())) {
+                        _handleVerifyAnnotation(dataVerifyManager, element);
+                    }
                 }
-            } else if (!isJavaType(field)) {//自定义类型递归处理自定义类型所有属性
+            } else if (!isJavaClass(field.getDeclaringClass())) {//自定义类型递归处理自定义类型所有属性
                 _handleVerifyAnnotation(dataVerifyManager, fieldValue);
             }
 
         }
+    }
+
+
+    public static boolean isJavaClass(Class<?> clz) {
+        return clz != null && clz.getClassLoader() == null;
     }
 
     /*
