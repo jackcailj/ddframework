@@ -14,6 +14,8 @@ public abstract class InterfaceBase extends FunctionalBase {
 	protected boolean bHttps=false;
 	protected boolean bPost=false;
 	protected String enviroment = "";
+
+	protected Double elapsedTime=null;//请求时间
 	
 	public String getEnviroment() {
 		return enviroment;
@@ -44,13 +46,17 @@ public abstract class InterfaceBase extends FunctionalBase {
 	public void doWork() throws Exception {
 		// TODO Auto-generated method stub
 		super.doWork();
-		beforeRequest();		
+		beforeRequest();
+
+        Double before=Double.valueOf(System.currentTimeMillis());
 		if(bPost==false) {
 			result = HttpDriver.doGet(URL, paramMap, bHttps);
 		}
 		else{
 			result = HttpDriver.doPost(URL, bHttps, paramMap);
 		}
+
+        elapsedTime=(System.currentTimeMillis()-before)/1000;
 
 		handleResult();
 	}
