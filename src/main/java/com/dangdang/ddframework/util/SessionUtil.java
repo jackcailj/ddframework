@@ -131,6 +131,8 @@ public class SessionUtil {
 		try{
 			logger.info("执行SQL："+sql);
 			session =getSession(conf);
+			session.clear();
+
 			if(session.getSessionFactory().getClassMetadata(classz)==null){
 				//如果是自定义类型，使用fastjson进行解析
 				
@@ -199,6 +201,7 @@ public class SessionUtil {
 		Session session = null;
 		try{
 			session =getSession(conf);
+			session.clear();
 			T result = (T) session.createSQLQuery(sql).setCacheMode(CacheMode.IGNORE)
 					.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP)
 					.uniqueResult();
@@ -244,6 +247,7 @@ public class SessionUtil {
 		Session session = null;
 		try{
 			session =getSession(conf);
+			session.clear();
 			if(rowNumber==1)
 			 {
 				T result = (T)session.createQuery(sql).setMaxResults(rowNumber).uniqueResult();

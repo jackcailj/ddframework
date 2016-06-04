@@ -363,5 +363,33 @@ public class DbUtil {
 	}
 	
 
-	
+    /*
+    将Map中转换成where 条件语句，全部为and关系
+     */
+	public static String ConvertFilterString(Map<String,Object> paramMap){
+
+		String returnStr="";
+		if(paramMap==null){
+			return returnStr;
+		}
+
+        int nIndex =0;
+		for(String key: paramMap.keySet()){
+
+			returnStr+=" "+key;
+			if(paramMap.get(key) instanceof List){
+				returnStr+=" in ("+StringUtils.join(paramMap.get(key),",")+")";
+			}
+			else{
+				returnStr+=" = "+ paramMap.get(key);
+			}
+
+            if(nIndex < paramMap.keySet().size()-1) {
+                returnStr += " and ";
+            }
+            nIndex++;
+		}
+
+        return returnStr;
+	}
 }
