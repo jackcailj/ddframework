@@ -48,6 +48,7 @@ public class ValueVerify<T> extends VerifyBase{
 		try{
 
 			if(__value1==null || __value2==null){
+				logger.info("值对比--有值为null验证两个值是否均为null");
 				if(__value1==__value2){
 					verifyResult=VerifyResult.SUCCESS;
 				}

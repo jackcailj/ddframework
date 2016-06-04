@@ -28,7 +28,9 @@ public class Compare {
 		for(Entry<String, Object> entry: map2.entrySet()){
 			String keyString=entry.getKey();
 			Object valueString=entry.getValue();
-			
+
+			logger.info("开始对比属性:"+keyString);
+
 			if(!map1.containsKey(keyString)){
 				logger.error("不包含key:"+keyString);
 				return false;
@@ -64,7 +66,13 @@ public class Compare {
 			else {
 				if(valueString instanceof Timestamp || valueString instanceof Date){
 					long time1=(Long) valueString.getClass().getMethod("getTime",null).invoke(valueString);
-					long time2 =(Long) map1.get(keyString).getClass().getMethod("getTime",null).invoke(valueString);
+					Long time2=null;
+					if(map1.get(keyString) instanceof Timestamp || map1.get(keyString) instanceof Date ) {
+						time2 = (Long) map1.get(keyString).getClass().getMethod("getTime", null).invoke(valueString);
+					}
+					else{
+						time2= (Long) map1.get(keyString);
+					}
 					
 					if(time1!=time2){
 						logger.error("不一致的地方：值【key:"+keyString+" value:"+map1.get(keyString)+"】和【key:"+keyString+" value:"+valueString+"】");
@@ -112,7 +120,7 @@ public class Compare {
 				
 				if(object instanceof Map &&  o1 instanceof Map ){
 					
-						if (!Contains((Map<String, Object>)object,(Map<String, Object>)o1)) {
+						if (!Contains((Map<String, Object>)o1,(Map<String, Object>)object)) {
 							continue;
 						}
 						else {
@@ -163,7 +171,10 @@ public class Compare {
 	 * 
 	 */
 	public static boolean equals(List list1, List list2) throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-		
+		logger.info("List对比...");
+		logger.info("List1:"+list1);
+		logger.info("List2:"+list2);
+
 		if(list1.size() != list2.size()){
 			logger.error("list大小不相等");
 			return false;
@@ -173,32 +184,34 @@ public class Compare {
 	}
 	
 	public static boolean equalsAndSort(List list1, List list2) throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-		
+		logger.info("List对比...");
+		logger.info("List1:"+list1);
+		logger.info("List2:"+list2);
+
 		if(list1.size() != list2.size()){
 			logger.error("list大小不相等");
 			return false;
 		}
 	
 		for (int i = 0; i < list1.size(); i++) {
+
+			logger.info("开始对比第"+i+"行数据...");
 			boolean bContains = false;
 			Object object = list1.get(i);
 			Object o1 = list2.get(i);
 			if (object instanceof Map && o1 instanceof Map) {
 				if (!Contains((Map<String, Object>)object,(Map<String, Object>) o1)) {
-					logger.error("第" + i + "行数据不相等");
+					logger.error("结束对比对比第" + i + "行数据---不相等");
 					return false;
-				} else {
-					continue;
 				}
 			}
 			else {
 				if (!object.toString().equals(o1.toString())) {
-					logger.error("第" + i + "行数据不相等:"+object.toString()+"和"+o1.toString());
+					logger.error("结束对比对比第" + i + "行数据---不相等:" + object.toString() + "和" + o1.toString());
 					return false;
-				} else {
-					continue;
 				}
 			}
+			logger.info("结束对比对比第"+i+"行数据---正确");
 		}
 		
 		return true;

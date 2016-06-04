@@ -168,8 +168,8 @@ public class RecordExVerify extends RecordVerify{
 			}
 			
 			//获取子表数据
-			List subObject = null;
-			if(__subTableObjectsList.size() != 0){
+			List subObject = new ArrayList();
+			if(__subTableObjectsList.size() != 0 && list.size()>0){
 				Field field = list.get(0).getClass().getDeclaredField(MapperXmlParse.getOrmFiledName(__excpectObject.getClass(),__mainTableID));
 				field.setAccessible(true);
 				subObject = DbUtil.selectList(__dbConf, "select * from "+MapperXmlParse.getTableName(__subTableObjectsList.get(0).getClass())+ " where "+__mainTableID +"='"+field.get(list.get(0))+"'",__subTableObjectsList.get(0).getClass());
