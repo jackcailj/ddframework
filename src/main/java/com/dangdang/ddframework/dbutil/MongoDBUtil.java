@@ -3,11 +3,13 @@ package com.dangdang.ddframework.dbutil;
 import java.net.UnknownHostException;
 
 import org.apache.log4j.Logger;
+import org.bson.types.ObjectId;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 
@@ -47,10 +49,15 @@ public class MongoDBUtil {
 	 * 
 	 * */
 	public static String findSortOne(String key, Object value) throws Exception{
-		connect();
+		//connect();
 		DBCursor sort = collection.find().sort(new BasicDBObject(key,value)).limit(1);
 		String str = sort.next().toString();
 		return str;
+	}
+	
+	public static String findOne(String actionName){
+		DBObject sort = collection.findOne(new BasicDBObject("actionName", "\"+actionName+\""));
+		return sort.toString();
 	}
 	
 	public static int getAllCount() throws Exception{
