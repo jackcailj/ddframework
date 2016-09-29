@@ -1,5 +1,7 @@
 package com.dangdang.ddframework.util;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -135,5 +137,13 @@ public class Util {
     public static String getJsonRegexString(String jsonKey,String jsonValue){
         return "\""+jsonKey+"\":\\s*[\"]*"+jsonValue+"(.*?)[\",}]+";
     }
+
+
+	public static String getStrackTrace(Throwable t){
+		StringWriter stringWriter= new StringWriter();
+		PrintWriter writer= new PrintWriter(stringWriter);
+		t.printStackTrace(writer); StringBuffer buffer= stringWriter.getBuffer();
+		return buffer.toString();
+	}
 
 }

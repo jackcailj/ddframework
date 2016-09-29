@@ -10,7 +10,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionContext;
 import org.apache.log4j.Logger;
 
 import com.alibaba.fastjson.*;
@@ -18,14 +23,108 @@ import com.google.gson.Gson;
 
 public class Compare {
 	public static Logger logger = Logger.getLogger(Compare.class);
+
+
+	public static boolean compareObject(Object object1,Object object2) throws Exception {
+
+		if(object1 == null && object2==null
+				|| (object1!=null && StringUtils.isBlank(object1.toString()) && object2==null)
+				|| (object1==null && (object2!=null && StringUtils.isBlank(object2.toString())))){
+			//logger.info(keyString+"值为null，不进行比对");
+			return true;
+		}
+
+		if(object1==null || object2 ==null){
+		    return false;
+        }
+
+		//如果是列表，比对类表是否包含
+		if(object1 instanceof List){
+			List tempList1=(List)object2;
+			List tempList2=(List)object1;
+			if(!equalsAndSort(tempList1,tempList2)){
+				return false;
+			}
+		}
+		else if(object1 instanceof Map)
+		{
+			Map<String, Object> tempMap1=(Map<String, Object>)object2;
+			Map<String, Object> tempMap2=(Map<String, Object>)object1;
+			if(!equals(tempMap1,tempMap2)){
+				return false;
+			}
+		}
+		else {
+			if(object1 instanceof Timestamp || object1 instanceof Date){
+				long time1=(Long) object1.getClass().getMethod("getTime",null).invoke(object1);
+				Long time2=null;
+				if(object2 instanceof Timestamp || object2 instanceof Date ) {
+					time2 = (Long) object2.getClass().getMethod("getTime", null).invoke(object2);
+				}
+				else{
+					time2= (Long) object2;
+				}
+
+				if(time1!=time2){
+					//logger.error("不一致的地方：值【key:"+keyString+" value:"+object2+"】和【key:"+keyString+" value:"+valueString+"】");
+					return false;
+				}
+			}
+			else if(object1 instanceof BigDecimal){
+				//BigDecimal比较大小时使用equals不行，需要用compareTo
+				if(((BigDecimal) object1).compareTo(new BigDecimal(object2.toString()))!=0){
+					//logger.error("不一致的地方：值【key:"+keyString+" value:"+object2+"】和【key:"+keyString+" value:"+valueString+"】");
+					return false;
+				}
+			}
+			else if(!object1.toString().equals(object2.toString())){
+
+				//logger.error("不一致的地方：值【key:"+keyString+" value:"+object2+"】和【key:"+keyString+" value:"+valueString+"】");
+				return false;
+			}
+		}
+		return true;
+	}
+
+
 	/*
 	 * 验证map1包含map2
 	 * 以map2为基准，如果map2的字段为null，则不进行不对
 	 * */
 	public static boolean Contains(Map<String, Object> map1,Map<String, Object> map2 ) throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException
 	{
-		
-		for(Entry<String, Object> entry: map2.entrySet()){
+		List<CompareResult> compareResults =  map2.entrySet().parallelStream().map(entry->{
+
+			CompareResult cresult = new CompareResult();
+
+			Object object1 = entry.getValue();
+			Object object2 = map1.get(entry.getKey());
+			boolean result =false;
+			cresult.setContent("属性【"+entry.getKey()+"】");
+            cresult.setValue1(object1);
+            cresult.setValue2(object2);
+
+			try {
+				result = compareObject(object1,object2);
+			} catch (Exception e) {
+				cresult.setInfo(Util.getStrackTrace(e));
+				e.printStackTrace();
+			}
+			finally {
+				cresult.setResult(result);
+			}
+			return cresult;
+		}).collect(Collectors.toList());
+
+		List<CompareResult> failedResults =compareResults.stream().filter(compareResult -> compareResult.getResult()==false).collect(Collectors.toList());
+		if(failedResults.size()>0){
+			logger.error("对象不一致："+JSONObject.toJSONString(failedResults));
+			return false;
+		}
+
+		return true;
+
+		/*for(Entry<String, Object> entry: map2.entrySet()){
 			String keyString=entry.getKey();
 			Object valueString=entry.getValue();
 
@@ -43,6 +142,10 @@ public class Compare {
 
 
 			if(map1.get(keyString)==null){
+				//字符串空值和null认为相等。
+				if(StringUtils.isBlank(valueString.toString())){
+					continue;
+				}
 				logger.error("value1 "+keyString+"值为null，不正确");
 				return false;
 			}
@@ -93,11 +196,11 @@ public class Compare {
 				}
 			}
 		}
-		return true;
+		return true;*/
 	}
 	
 	/**
-	 * 验证list1是否包含list2
+	 * 验证list2是否包含list1
 	 * @param list1
 	 * @param list2
 	 * @return
@@ -108,12 +211,45 @@ public class Compare {
 	 * @throws IllegalArgumentException 
 	 */
 	public static boolean Contains(List list1, List list2) throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-		
-		List machingList = new ArrayList();
-		for(Object object : list2){
+
+        Boolean allResult = list1.parallelStream().allMatch(o -> {
+
+            CompareResult compareResult = new CompareResult();
+            compareResult.setContent("是否包含:" + JSONObject.toJSONString(o));
+            Boolean bResult = list2.parallelStream().anyMatch(object -> {
+
+                boolean result = false;
+                try {
+                    if (object instanceof Map && o instanceof Map) {
+                        if (Contains((Map<String, Object>) o, (Map<String, Object>) object)) {
+                            result = true;
+                        }
+                    } else {
+                        if (object.toString().equals(o.toString())) {
+                            result = true;
+                        }
+                    }
+                } catch (Exception e) {
+                    logger.error(Util.getStrackTrace(e));
+                }
+                return result;
+            });
+            compareResult.setResult(bResult);
+            if(bResult ==false){
+                logger.error("不包含对象:"+o);
+            }
+            return bResult;
+
+        });
+
+        return allResult;
+
+
+		/*List machingList = new ArrayList();
+		for(Object object : list1){
 			boolean bContains = false;
-			for(Object o1:list1){
-				
+			for(Object o1:list2){
+
 				if(machingList.contains(o1)){
 					continue;
 				}
@@ -148,7 +284,7 @@ public class Compare {
 			}
 			
 		}
-		return true;
+		return true;*/
 	}
 	
 	
@@ -192,29 +328,63 @@ public class Compare {
 			logger.error("list大小不相等");
 			return false;
 		}
-	
-		for (int i = 0; i < list1.size(); i++) {
 
-			logger.info("开始对比第"+i+"行数据...");
-			boolean bContains = false;
-			Object object = list1.get(i);
-			Object o1 = list2.get(i);
-			if (object instanceof Map && o1 instanceof Map) {
-				if (!Contains((Map<String, Object>)object,(Map<String, Object>) o1)) {
-					logger.error("结束对比对比第" + i + "行数据---不相等");
-					return false;
-				}
-			}
-			else {
-				if (!object.toString().equals(o1.toString())) {
-					logger.error("结束对比对比第" + i + "行数据---不相等:" + object.toString() + "和" + o1.toString());
-					return false;
-				}
-			}
-			logger.info("结束对比对比第"+i+"行数据---正确");
-		}
-		
-		return true;
+        Boolean allResult = IntStream.range(0, list1.size()).parallel().allMatch(idx->{
+           Object object1 =  list1.get(idx);
+            Object object2 =  list2.get(idx);
+
+            Boolean bResult = false;
+            try {
+                if (object1 instanceof Map && object2 instanceof Map) {
+                    if (Contains((Map<String, Object>) object1, (Map<String, Object>) object2)) {
+                        bResult=true;
+                    }
+                } else {
+                    if (object1.toString().equals(object2.toString())) {
+                        return true;
+                    }
+                }
+            }catch (Exception e){
+                logger.error(Util.getStrackTrace(e));
+            }
+            finally {
+
+                if(bResult ==false){
+                    CompareResult compareResult = new CompareResult();
+                    compareResult.setValue1(object1);
+                    compareResult.setValue1(object2);
+                    compareResult.setResult(bResult);
+                    compareResult.setInfo("第【"+idx +"】条记录不相等");
+                }
+
+                return bResult;
+            }
+        });
+
+        return allResult;
+//
+//        for (int i = 0; i < list1.size(); i++) {
+//
+//			logger.info("开始对比第"+i+"行数据...");
+//			boolean bContains = false;
+//			Object object = list1.get(i);
+//			Object o1 = list2.get(i);
+//			if (object instanceof Map && o1 instanceof Map) {
+//				if (!Contains((Map<String, Object>)object,(Map<String, Object>) o1)) {
+//					logger.error("结束对比对比第" + i + "行数据---不相等");
+//					return false;
+//				}
+//			}
+//			else {
+//				if (!object.toString().equals(o1.toString())) {
+//					logger.error("结束对比对比第" + i + "行数据---不相等:" + object.toString() + "和" + o1.toString());
+//					return false;
+//				}
+//			}
+//			logger.info("结束对比对比第"+i+"行数据---正确");
+//		}
+//
+//		return true;
 	}
 	
 	
@@ -245,4 +415,54 @@ public class Compare {
 		
 		
 	}
+
+}
+
+
+class CompareResult{
+	String content;
+	Boolean result;
+    Object value1;
+    Object value2;
+	String  info;
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public Boolean getResult() {
+		return result;
+	}
+
+	public void setResult(Boolean result) {
+		this.result = result;
+	}
+
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
+    public Object getValue1() {
+        return value1;
+    }
+
+    public void setValue1(Object value1) {
+        this.value1 = value1;
+    }
+
+    public Object getValue2() {
+        return value2;
+    }
+
+    public void setValue2(Object value2) {
+        this.value2 = value2;
+    }
 }
