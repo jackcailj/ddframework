@@ -101,8 +101,8 @@ public class Compare {
 			Object object2 = map1.get(entry.getKey());
 			boolean result =false;
 			cresult.setContent("属性【"+entry.getKey()+"】");
-            cresult.setValue1(object1);
-            cresult.setValue2(object2);
+            cresult.setValue1(object2);
+            cresult.setValue2(object1);
 
 			try {
 				result = compareObject(object1,object2);
@@ -212,6 +212,14 @@ public class Compare {
 	 */
 	public static boolean Contains(List list1, List list2) throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 
+		if(list1 == null && list2 ==null ){
+			return true;
+		}
+
+		if(list1 == null || list2 == null){
+			return false;
+		}
+
         Boolean allResult = list1.parallelStream().allMatch(o -> {
 
             CompareResult compareResult = new CompareResult();
@@ -294,10 +302,10 @@ public class Compare {
 	 * */
 	public static boolean equals(Map<String, Object> map1,Map<String, Object> map2 ) throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException
 	{
-		if(map1.size() != map2.size()){
+		/*if(map1.size() != map2.size()){
 			logger.error("字典大小不相等");
 			return false;
-		}
+		}*/
 		
 		return Contains(map1, map2);
 	}
@@ -312,7 +320,7 @@ public class Compare {
 		logger.info("List2:"+list2);
 
 		if(list1.size() != list2.size()){
-			logger.error("list大小不相等");
+			logger.error("list大小不相等:"+"list1大小:"+list1.size()+"   list2大小:"+list2.size());
 			return false;
 		}
 	
@@ -325,7 +333,15 @@ public class Compare {
 		logger.info("List2:"+list2);
 
 		if(list1.size() != list2.size()){
-			logger.error("list大小不相等");
+			logger.error("list大小不相等:"+"list1大小:"+list1.size()+"    list2大小:"+list2.size());
+			return false;
+		}
+
+		if(list1 == null && list2 ==null ){
+			return true;
+		}
+
+		if(list1 == null || list2 == null){
 			return false;
 		}
 
@@ -350,11 +366,13 @@ public class Compare {
             finally {
 
                 if(bResult ==false){
-                    CompareResult compareResult = new CompareResult();
-                    compareResult.setValue1(object1);
-                    compareResult.setValue1(object2);
-                    compareResult.setResult(bResult);
-                    compareResult.setInfo("第【"+idx +"】条记录不相等");
+                    //CompareResult compareResult = new CompareResult();
+                    //compareResult.setValue1(object1);
+                    //compareResult.setValue2(object2);
+                    //compareResult.setResult(bResult);
+                    //compareResult.setInfo("第【"+idx +"】条记录不相等");
+
+					logger.error("第【"+idx +"】条记录不相等:"+"Value1:"+JSONObject.toJSONString(object1)+"Value2:"+JSONObject.toJSONString(object2));
                 }
 
                 return bResult;
