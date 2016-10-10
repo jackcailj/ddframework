@@ -2,9 +2,12 @@ package com.dangdang.ddframework.dataverify;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.text.StyledEditorKit.BoldAction;
 
+import com.dangdang.ddframework.util.Util;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.log4j.Logger;
 
 public class DataVerifyManager {
@@ -60,20 +63,31 @@ public class DataVerifyManager {
 	 */
 	public boolean dataVerify() throws Exception {
 		
-		boolean result = true;
-		for(IDataVerify verify : verifys){
+
+		List<Boolean> results = verifys.parallelStream().map(verify->{
+		//for(IDataVerify verify : verifys){
+			boolean result = true;
 			logger.info("开始执行验证："+verify.getClass());
 			logger.info("验证内容："+verify.getVerifyContent());
-			verify.dataVerify();
-			if(verify.getVerifyResult()==false){
-				logger.info(verify.getErrorInfo());
-				errorInfos.add(verify.getErrorInfo());
-				result =false;
+			try {
+				verify.dataVerify();
+				if(verify.getVerifyResult()==false){
+					logger.info(verify.getErrorInfo());
+					errorInfos.add(verify.getErrorInfo());
+					result =false;
+				}
+				logger.info("结束执行验证："+verify.getClass()+"结果："+verify.getVerifyResult());
+			} catch (Exception e) {
+				logger.error(Util.getStrackTrace(e));
 			}
-			logger.info("结束执行验证："+verify.getClass()+"结果："+verify.getVerifyResult());
-		}
-		
-		return result;
+
+			return result;
+
+		}).collect(Collectors.toList());
+
+		Boolean bResult = results.parallelStream().allMatch(o-> {return o;});
+
+		return bResult;
 	}
 	
 	
