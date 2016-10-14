@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 import org.apache.ibatis.io.Resources;  
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;  
@@ -25,7 +25,7 @@ public class MyBatisUtil {
     //private static SessionFactory factory;
     //private static Session session;
     //private static Map<String, Session> sessionManager = new HashMap<String, Session>();
-	public static Logger logger = Logger.getLogger(MyBatisUtil.class);
+	public static Logger logger = LoggerFactory.getLogger(MyBatisUtil.class);
     private static Map<String, SqlSessionFactory > factoryManager = new HashMap<String, SqlSessionFactory >();
 
     public static SqlSession getSession() throws IOException{

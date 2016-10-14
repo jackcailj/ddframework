@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 import org.hibernate.CacheMode;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -31,7 +31,7 @@ public class SessionUtil {
     //private static SessionFactory factory;
     //private static Session session;
     //private static Map<String, Session> sessionManager = new HashMap<String, Session>();
-	public static Logger logger = Logger.getLogger(SessionUtil.class);
+	public static Logger logger = LoggerFactory.getLogger(SessionUtil.class);
     private static Map<String, SessionFactory> factoryManager = new HashMap<String, SessionFactory>();
 
     public static Session getSession(){

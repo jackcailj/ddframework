@@ -1,13 +1,13 @@
 package com.dangdang.ddtests;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
 
 
 public class ExampleTests {
 	
-	private static Logger logger = Logger.getLogger(ExampleTests.class);
+	private static Logger logger = LoggerFactory.getLogger(ExampleTests.class);
 	
 	@Test
 	public void test1(){

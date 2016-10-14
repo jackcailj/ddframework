@@ -8,7 +8,7 @@ import java.util.TreeMap;
 import javax.swing.text.StyledEditorKit.BoldAction;
 
 import com.dangdang.ddframework.dataverify.verify_annotation.AnnotationVerifyProcessor;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
@@ -28,7 +28,7 @@ import com.dangdang.ddframework.util.Util;
  */
 public abstract class FunctionalBase {
 	
-	public static Logger logger = Logger.getLogger(FunctionalBase.class);
+	public static Logger logger = LoggerFactory.getLogger(FunctionalBase.class);
 	
 	protected Map<String, String> originalParamMap = new TreeMap<String, String>();
 	protected Map<String, String> paramMap = new TreeMap<String, String>();
@@ -149,7 +149,8 @@ public abstract class FunctionalBase {
 			genrateVerifyData();
 		}
 		catch(Exception e){
-			logger.error(e);
+			logger.error("异常：",e);
+
 		}
 	}
 	

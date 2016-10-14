@@ -19,7 +19,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentFactory;
@@ -31,7 +31,7 @@ import com.alibaba.fastjson.JSONObject;
 
 public class ResultSet {
 
-	public static Logger logger = Logger.getLogger(ResultSet.class);
+	public static Logger logger = LoggerFactory.getLogger(ResultSet.class);
 	
 	List results;
 	

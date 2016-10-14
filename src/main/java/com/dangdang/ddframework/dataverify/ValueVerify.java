@@ -3,7 +3,7 @@ package com.dangdang.ddframework.dataverify;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dangdang.ddframework.util.Compare;
@@ -20,7 +20,7 @@ public class ValueVerify<T> extends VerifyBase{
 	//boolean bequals =true;
 	boolean __isObject=false;
 	
-	protected static Logger logger = Logger.getLogger(ValueVerify.class);
+	protected static Logger logger = LoggerFactory.getLogger(ValueVerify.class);
 	
 	public ValueVerify(T value1,T value2) {
 		__value1=value1;

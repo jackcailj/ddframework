@@ -1,6 +1,6 @@
 package com.dangdang.ddframework.util;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class PropertyUtils {
 
-    public static Logger logger = Logger.getLogger(PropertyUtils.class);
+    public static Logger logger = LoggerFactory.getLogger(PropertyUtils.class);
 
     public static void copyProperty(Object source,Object target) throws Exception {
 
@@ -55,7 +55,7 @@ public class PropertyUtils {
                     Method setMethod = setMethods.get(property);
                     setMethod.invoke(target, propertyValue);
                 }catch (Exception e){
-                    logger.error(e.getStackTrace());
+                    logger.error("异常：",e);
                 }
             }
 

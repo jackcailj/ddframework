@@ -16,7 +16,7 @@ import java.util.Map;
 
 import javax.crypto.Cipher;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 
 
 /**
@@ -24,7 +24,7 @@ import org.apache.log4j.Logger;
  * 
  */
 public abstract class RsaUtils {
-	private static final Logger LOG = Logger.getLogger(RsaUtils.class);
+	private static final Logger LOG = LoggerFactory.getLogger(RsaUtils.class);
 	private static final String ALGORITHM = "RSA";
 	private static final int KEY_BIT = 512;
 

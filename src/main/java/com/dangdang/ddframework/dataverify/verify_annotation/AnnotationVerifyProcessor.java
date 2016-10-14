@@ -5,10 +5,12 @@ import com.dangdang.ddframework.dataverify.ValueVerify;
 import com.dangdang.ddframework.dataverify.VerifyResult;
 import com.dangdang.ddframework.reponse.ReponseV1;
 import com.dangdang.ddframework.reponse.ReponseV2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.List;
-import java.util.logging.Logger;
+
 
 /**
  * Created by cailianjie on 2015-8-29.
@@ -16,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class AnnotationVerifyProcessor {
 
-    protected static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AnnotationVerifyProcessor.class);
+    protected static Logger logger = LoggerFactory.getLogger(AnnotationVerifyProcessor.class);
 
     public static void handleVerifyAnnotation(DataVerifyManager dataVerifyManager,Object o) throws IllegalAccessException {
         if(o ==null) {

@@ -46,10 +46,12 @@ import org.apache.http.impl.execchain.RequestAbortedException;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class HttpDriver {
-	public static Logger logger = Logger.getLogger(HttpDriver.class);
+	public static Logger logger = LoggerFactory.getLogger(HttpDriver.class);
 	private static final CloseableHttpClient httpClient;
 	public static final String CHARSET = "UTF-8";
 	private static  CloseableHttpClient httpsClient;
@@ -67,7 +69,7 @@ public class HttpDriver {
 		try{
 			httpsClient=createHttpsClient();
 		}catch(Exception e){
-			logger.error(e);
+			logger.error("异常：",e);
 		}
 	}
 	

@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 import org.hibernate.CacheMode;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.transform.Transformers;
 
 public class SqlUtil {
-    protected static Logger logger = Logger.getLogger(SqlUtil.class);
+    protected static Logger logger = LoggerFactory.getLogger(SqlUtil.class);
 	
 	public static List<Map<Object, Object>> executeSql(Session session,String sql,String msg) {
 		if(msg != null && !StringUtils.isEmpty(msg)){

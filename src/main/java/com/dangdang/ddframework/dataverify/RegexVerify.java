@@ -1,6 +1,7 @@
 package com.dangdang.ddframework.dataverify;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,7 +13,7 @@ import java.util.regex.Pattern;
  */
 public class RegexVerify extends VerifyBase{
 
-    protected static Logger logger = Logger.getLogger(RegexVerify.class);
+    protected static Logger logger = LoggerFactory.getLogger(RegexVerify.class);
 
     String __pattern;
     String __text;

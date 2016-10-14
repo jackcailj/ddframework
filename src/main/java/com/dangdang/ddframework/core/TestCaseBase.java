@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.lang.reflect.Method;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 import org.testng.ITestContext;
 import org.testng.annotations.*;
 
@@ -16,7 +16,7 @@ public abstract class TestCaseBase {
 	
 	public String testDataFile = "";
 	Util utils = new Util();
-	Logger log = Logger.getLogger(TestCaseBase.class);
+	Logger log = LoggerFactory.getLogger(TestCaseBase.class);
 	
 //	@DataProvider(name="dataProvider1")
 //	public Iterator<Object[]> DataProvider(Method method){

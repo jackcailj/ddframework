@@ -8,11 +8,11 @@ import javax.swing.text.StyledEditorKit.BoldAction;
 
 import com.dangdang.ddframework.util.Util;
 import com.sun.org.apache.xpath.internal.operations.Bool;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 
 public class DataVerifyManager {
 	
-	protected static Logger logger = Logger.getLogger(DataVerifyManager.class);
+	protected static Logger logger = LoggerFactory.getLogger(DataVerifyManager.class);
 	
 	private List<IDataVerify> verifys =new ArrayList<IDataVerify>();
 	protected List<String> errorInfos = new ArrayList<String>();

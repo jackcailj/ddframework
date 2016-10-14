@@ -5,13 +5,13 @@ import java.io.InputStream;
 import java.io.PrintStream;
 
 import org.apache.commons.net.telnet.TelnetClient;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 
 import javax.persistence.criteria.CriteriaBuilder;
 
 
 public class TelnetUtil {
-	static Logger logger = Logger.getLogger(TelnetUtil.class);
+	static Logger logger = LoggerFactory.getLogger(TelnetUtil.class);
     /** 新建一个TelnetClient对象 */
     private TelnetClient telnetClient = new TelnetClient();
     /** 输入流，接收返回信息 */
@@ -94,7 +94,7 @@ public class TelnetUtil {
         for(int i=0; i<command.length; i++){
         	result[i] = execute(command[i]);
         }
-        logger.info(result); 
+        logger.info(""+result);
         disconnect();
 		return result;
    }

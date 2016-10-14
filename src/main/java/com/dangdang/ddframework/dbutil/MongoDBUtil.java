@@ -2,7 +2,7 @@ package com.dangdang.ddframework.dbutil;
 
 import java.net.UnknownHostException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 import org.bson.types.ObjectId;
 
 import com.mongodb.BasicDBObject;
@@ -15,7 +15,7 @@ import com.mongodb.MongoException;
 
 public class MongoDBUtil {
 	
-	static Logger logger = Logger.getLogger(MongoDBUtil.class);
+	static Logger logger = LoggerFactory.getLogger(MongoDBUtil.class);
 	static DBCollection collection;
 	private static final String HOST = "10.255.223.180";  	  
     private static final String dbName = "temp"; 

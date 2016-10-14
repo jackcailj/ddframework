@@ -14,7 +14,7 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 
 import com.dangdang.ddframework.core.TestGroups;
 
@@ -30,7 +30,7 @@ public class ExcelData implements Iterator<Object[]> {
 	private int columnNum = 0;// 列数
 	//private String[] columnnName;// 列名
 	
-	protected static Logger logger = Logger.getLogger(ExcelData.class);
+	protected static Logger logger = LoggerFactory.getLogger(ExcelData.class);
 	
 	private final String CASE_NAME = "用例名称";
 	private final String EXPECTED = "期望";

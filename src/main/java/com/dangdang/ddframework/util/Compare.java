@@ -16,13 +16,13 @@ import java.util.stream.IntStream;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionContext;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.*;
 import com.google.gson.Gson;
 
 public class Compare {
-	public static Logger logger = Logger.getLogger(Compare.class);
+	public static Logger logger = LoggerFactory.getLogger(Compare.class);
 
 
 	public static boolean compareObject(Object object1,Object object2) throws Exception {

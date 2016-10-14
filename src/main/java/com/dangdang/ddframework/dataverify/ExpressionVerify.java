@@ -1,6 +1,6 @@
 package com.dangdang.ddframework.dataverify;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 
 /**
  * Created by cailianjie on 2015-10-28.
@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
  * 验证布尔类型表达式
  */
 public class ExpressionVerify extends VerifyBase{
-	protected static Logger logger = Logger.getLogger(ExpressionVerify.class);
+	protected static Logger logger = LoggerFactory.getLogger(ExpressionVerify.class);
     Boolean __expression;
 
     public ExpressionVerify(Boolean expression){

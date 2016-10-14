@@ -13,7 +13,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 
 import javacommon.util.CollectionUtils;
 import javacommon.util.ConfigReader;
@@ -31,7 +31,7 @@ public final class SignUtils {
 
 	public static final String SUBMIT_ORDER_PRIVATEKEY = "MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAkoSLEwgxJkJijIKoqJ0uDmEu9wwkyDGQAW4cmi38VhV7VJE1263GpY03K9UQn7HpS/nV34H76ZaCqmmjjXWezwIDAQABAkAh4ZqTfRp4gXNukKxVyXskAh8tK9a5oJRvcDoXATlP4nAm9rS3LKjOAt9sK2M0auiU0upN1IKauZwbRWO56CwJAiEAysroa1CeQPsNFDevzLfgdcfLQXBSOBMq/cOYT80Yhh0CIQC49cnFH3OXZDN0tfgJ6w8+G6UpCd7tyyqODyXN/qE02wIgIeE2ZT9pwQdwTvFiwHvz1xmS/pLKWa3yH8U+vA5Sy40CIQCZ35E+t0248xmDzSdPSQjjSKh8ncOi3NTIXn27BE0k5QIgVxeLFZRqxWE+CGY+LHKb9wFU3CD7TGjdqMlBNOB1yZc=";
 
-	private static Logger logger = Logger.getLogger(SignUtils.class);
+	private static Logger logger = LoggerFactory.getLogger(SignUtils.class);
 	
 	private SignUtils() {
 

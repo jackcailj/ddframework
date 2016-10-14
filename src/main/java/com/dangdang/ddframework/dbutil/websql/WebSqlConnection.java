@@ -10,7 +10,7 @@ import java.util.Properties;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;  import org.slf4j.LoggerFactory;
 import org.dom4j.DocumentException;
 import org.xml.sax.SAXException;
 
@@ -21,7 +21,7 @@ import com.dangdang.ddframework.util.ResourceLoader;
 public class WebSqlConnection {
 	protected String url;
 	protected Map<String, String> dbParam;
-	protected static Logger logger = Logger.getLogger(WebSqlConnection.class);
+	protected static Logger logger = LoggerFactory.getLogger(WebSqlConnection.class);
 	
 	public WebSqlConnection(String conf) {
 		// TODO Auto-generated constructor stub
